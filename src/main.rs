@@ -1,46 +1,57 @@
+use std::fmt::Result;
+use std::io::Result as IoResult;
 #[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    length: u32,
+enum UsState {
+    Alabama,
+    Alaska,
+}
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(UsState),
 }
 
-impl Rectangle {
-    fn area(&self) -> u32 {
-        self.width * self.length
+fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        Coin::Penny => 1,
+        Coin::Nickel => 6,
+        Coin::Dime => 25,
+        Coin::Quarter(state) => {
+            println!("{:?}", state);
+            23
+        }
     }
 }
-
-impl Rectangle {
-    fn can_hold(&self, other: &Rectangle) -> bool {
-        self.width > other.width && self.length > other.length
-    }
-}
-
-enum IpAddrKind {
-    v4(u8, u8, u8, u8),
-    v6(String), 
-}
-
-
 fn main() {
-    let rect = Rectangle {
-        width: 30,
-        length: 50,
-    };
-
-    println!("{}", area(&rect));
-    println!("{:?}", rect);
-    println!("{:#?}", rect);
-    println!("{:#?}", rect.area());
-    println!("{:#?}", rect.can_hold(&rect));
-    // let x: i8 = 5;
-    // let y: Option<i8> = Some(5);
-    // let sum = x + y;
-    let some_number = Some(5);
-    println!("{:?}", some_number);
-
+    let c = Coin::Quarter(UsState::Alaska);
+    println!("{}", value_in_cents(c));
+    let_if();
 }
 
-fn area(rect: &Rectangle) -> u32 {
-    rect.width * rect.length
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    match x {
+        None => None,
+        Some(i) => Some(i + 1),
+    }
+}
+
+// _下划线通配符
+fn match_() -> i8{
+    let v = 0u8;
+    match v {
+        0 => 0,
+        1 => 1,
+        _ => 2,
+    }
+}
+
+// if let 处理一种匹配而忽略其它匹配的情况， 可以把if let看作是match的语法糖
+fn let_if() {
+    let v = Some(0);
+    if let Some(0) = v {
+        println!("{:#?}", Some(3));
+    } else {
+        println!("{:#?}", Some(0u8));
+    }
 }
