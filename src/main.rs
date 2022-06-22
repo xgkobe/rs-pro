@@ -1,43 +1,46 @@
-// use std::io;
-use std::cmp::Ordering;
-// use rand::Rng;
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    length: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.length
+    }
+}
+
+impl Rectangle {
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.length > other.length
+    }
+}
+
+enum IpAddrKind {
+    v4(u8, u8, u8, u8),
+    v6(String), 
+}
+
 
 fn main() {
-//    let tup: (i32, f64, u8) = (500, 6.4, 1);
-//    let (x, y, z) = tup;
+    let rect = Rectangle {
+        width: 30,
+        length: 50,
+    };
 
-   let s = String::from("hhah");
-   compare_big(21);
-   cons_str(&s);
-   println!("{},", s);
+    println!("{}", area(&rect));
+    println!("{:?}", rect);
+    println!("{:#?}", rect);
+    println!("{:#?}", rect.area());
+    println!("{:#?}", rect.can_hold(&rect));
+    // let x: i8 = 5;
+    // let y: Option<i8> = Some(5);
+    // let sum = x + y;
+    let some_number = Some(5);
+    println!("{:?}", some_number);
+
 }
 
-fn cons_str (str: &String) {
-    println!("{}", str);
-}
-
-
-fn compare_big (x: i32) {
-   let mut number = 3;
-   while number != 0 {
-       println!("{}!", number);
-       number = number - 1;
-    }
-    let i = 32;
-    match x.cmp(&i) {
-        Ordering::Less => println!("Too small"),
-        Ordering::Greater => println!("Too big"),
-        Ordering::Equal => {
-            println!("You win!");
-        }
-    }
-
-    // let a = [1,2,3];
-    for ele in (i..33).rev() {
-        println!("the value is: {}", ele);
-    }
-
-    let s1 = String::from("xuguang");
-    let s2 = s1.clone();
-    println!("s1:{}, s2:{}", s1, s2);
+fn area(rect: &Rectangle) -> u32 {
+    rect.width * rect.length
 }
