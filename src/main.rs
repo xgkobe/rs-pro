@@ -1,33 +1,43 @@
-use std::io;
+// use std::io;
 use std::cmp::Ordering;
-use rand::Rng;
+// use rand::Rng;
 
 fn main() {
-    println!("猜数");
+//    let tup: (i32, f64, u8) = (500, 6.4, 1);
+//    let (x, y, z) = tup;
 
-    let secret_number = rand::thread_rng().gen_range(1, 101);
-    println!("生成的随机数是：{}", secret_number);
+   let s = String::from("hhah");
+   compare_big(21);
+   cons_str(&s);
+   println!("{},", s);
+}
 
-    loop {
-        let mut guss = String::new();
-        io::stdin().read_line(&mut guss).expect("无法读取行");
-        println!("你猜测的数是：{}", guss);
+fn cons_str (str: &String) {
+    println!("{}", str);
+}
 
-        let guss: u32 = match guss.trim().parse() {
-            Ok(num) => num,
-            Err(_) => {
-                println!("输入的格式不正确,请重新输入");
-                continue;
-            }
-        };
-        match guss.cmp(&secret_number) {
-            Ordering::Less => println!("Too small"),
-            Ordering::Greater => println!("Too big"),
-            Ordering::Equal => {
-                println!("You win!");
-                break;
-            }
-        }
 
+fn compare_big (x: i32) {
+   let mut number = 3;
+   while number != 0 {
+       println!("{}!", number);
+       number = number - 1;
     }
+    let i = 32;
+    match x.cmp(&i) {
+        Ordering::Less => println!("Too small"),
+        Ordering::Greater => println!("Too big"),
+        Ordering::Equal => {
+            println!("You win!");
+        }
+    }
+
+    // let a = [1,2,3];
+    for ele in (i..33).rev() {
+        println!("the value is: {}", ele);
+    }
+
+    let s1 = String::from("xuguang");
+    let s2 = s1.clone();
+    println!("s1:{}, s2:{}", s1, s2);
 }
