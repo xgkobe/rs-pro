@@ -1,57 +1,54 @@
-use std::fmt::Result;
-use std::io::Result as IoResult;
-#[derive(Debug)]
-enum UsState {
-    Alabama,
-    Alaska,
-}
-enum Coin {
-    Penny,
-    Nickel,
-    Dime,
-    Quarter(UsState),
+use yew::prelude::*;
+
+enum Msg {
+    AddOne,
 }
 
-fn value_in_cents(coin: Coin) -> u8 {
-    match coin {
-        Coin::Penny => 1,
-        Coin::Nickel => 6,
-        Coin::Dime => 25,
-        Coin::Quarter(state) => {
-            println!("{:?}", state);
-            23
+struct Model {
+    link: ComponentLink<Self>,
+    value: i64,
+}
+
+impl Component for Model {
+    type Message = Msg;
+    type Properties = ();
+
+    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
+        Self {
+            link,
+            value: 0,
+        }
+    }
+
+    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+        match msg {
+            Msg::AddOne => {
+                self.value += 1;
+                // the value has changed so we need to
+                // re-render for it to appear on the page
+                true
+            }
+        }
+    }
+
+    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
+        // Should only return "true" if new properties are different to
+        // previously received properties.
+        // This component has no properties so we will always return "false".
+        false
+    }
+
+    fn view(&self) -> Html {
+        html! {
+            <div>
+                <button onclick=self.link.callback(|_| Msg::AddOne)>{ "+1" }</button>
+                <p>{ self.value }</p>
+                <p>{"pc"}</p>
+            </div>
         }
     }
 }
+
 fn main() {
-    let c = Coin::Quarter(UsState::Alaska);
-    println!("{}", value_in_cents(c));
-    let_if();
-}
-
-fn plus_one(x: Option<i32>) -> Option<i32> {
-    match x {
-        None => None,
-        Some(i) => Some(i + 1),
-    }
-}
-
-// _下划线通配符
-fn match_() -> i8{
-    let v = 0u8;
-    match v {
-        0 => 0,
-        1 => 1,
-        _ => 2,
-    }
-}
-
-// if let 处理一种匹配而忽略其它匹配的情况， 可以把if let看作是match的语法糖
-fn let_if() {
-    let v = Some(0);
-    if let Some(0) = v {
-        println!("{:#?}", Some(3));
-    } else {
-        println!("{:#?}", Some(0u8));
-    }
+    yew::start_app::<Model>();
 }
