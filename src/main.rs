@@ -1,5 +1,6 @@
 use yew::prelude::*;
 
+// trunk serve
 enum Msg {
     AddOne,
 }
@@ -43,7 +44,7 @@ impl Component for Model {
             <div>
                 <button onclick=self.link.callback(|_| Msg::AddOne)>{ "+1" }</button>
                 <p>{ self.value }</p>
-                <p>{"pc"}</p>
+                <p>{"pc5"}</p>
             </div>
         }
     }
