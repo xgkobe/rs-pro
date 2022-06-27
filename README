@@ -1,0 +1,7 @@
+##HashMap
+.HashMap用的较少，不在Prelude中
+.标准库对其支持较少，没有内置的宏来创建HashMap
+.数据存储在heap上
+.同构的。一个HashMao中：
+  -所有的k必须是同一种类型
+  -所有的v必须是同一种类型
